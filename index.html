@@ -167,6 +167,104 @@ iframe { width: 100%; aspect-ratio: 16/9; border: 0; background: #000; display: 
 
 .popcorn-particle { position: fixed; pointer-events: none; z-index: 9999; animation: flyUp 1.3s cubic-bezier(0.1, 0.8, 0.3, 1) forwards; font-size: 26px; }
 @keyframes flyUp { 0% { transform: translateY(100vh) scale(0.5) rotate(0deg); opacity: 1; } 100% { transform: translateY(-10vh) scale(1.2) rotate(720deg); opacity: 0; } }
+
+/* 📱 تعديلات التجاوب للشاشات الصغيرة والموبايل (PWA Responsive) */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 90px; /* ترك مساحة كافية للـ Cyber Dock */
+  }
+  header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 12px 4%;
+  }
+  .nav-cluster {
+    justify-content: center;
+    width: 100%;
+  }
+  .search {
+    max-width: 100%;
+    min-width: 100%;
+  }
+  .cyber-gauge {
+    justify-content: center;
+    order: -1; /* يظهر أول عنصر في الأعلى لحفظ تناسق المساحة */
+    width: 100%;
+  }
+  .mood-radar-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 15px;
+  }
+  .radar-display {
+    width: 100px;
+    height: 100px;
+  }
+  .hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 20px;
+  }
+  .hero-img {
+    height: 200px;
+    order: -1; /* رفع الصورة فوق العنوان لتناسب الموبايل */
+  }
+  .achievements-box {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+    padding: 15px;
+  }
+  .ach-info {
+    flex-direction: column;
+  }
+  .ach-progress-wrapper {
+    width: 100%;
+  }
+  .dhero {
+    grid-template-columns: 1fr;
+    padding: 20px;
+    text-align: center;
+    align-items: center;
+  }
+  .dposter {
+    width: 160px;
+    margin: 0 auto;
+  }
+  .modal-actions {
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+  }
+  .modal-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .ep-select {
+    padding: 15px 20px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .ep-select select {
+    width: 100%;
+  }
+  .infinite-features-grid {
+    grid-template-columns: 1fr;
+    padding: 15px;
+  }
+  .cyber-dock {
+    bottom: 15px;
+    right: 50%;
+    transform: translateX(50%); /* ارجاع شريط التحكم في وسط الشاشة تماماً كالتطبيقات الذكية */
+    width: calc(100% - 40px);
+    max-width: 340px;
+    justify-content: space-around;
+    border-radius: 25px;
+    padding: 6px;
+  }
+}
 </style>
 </head>
 <body id="mainBody">
@@ -208,7 +306,6 @@ iframe { width: 100%; aspect-ratio: 16/9; border: 0; background: #000; display: 
 </header>
 
 <main>
-<!-- 🌟 رادار الـ Mood والفلترة الحية الفريدة -->
 <section class="mood-radar-container">
    <div class="radar-display">
       <div class="radar-sweep"></div>
@@ -237,7 +334,6 @@ iframe { width: 100%; aspect-ratio: 16/9; border: 0; background: #000; display: 
   <div class="hero-img"><img id="heroImg" src="https://image.tmdb.org/t/p/w1280/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg" alt="Banner"></div>
 </section>
 
-<!-- 🌟 لوحة الإنجازات والجوائز للمستخدم -->
 <section class="achievements-box">
    <div class="ach-info">
       <div class="ach-icon"><i class="fas fa-trophy"></i></div>
@@ -267,7 +363,6 @@ iframe { width: 100%; aspect-ratio: 16/9; border: 0; background: #000; display: 
 <div class="more"><button class="btn primary" id="more"><i class="fas fa-arrow-down"></i> تحميل المزيد من الحصريات</button></div>
 </main>
 
-<!-- 🌟 الرصيف السيبراني العائم الفريد -->
 <div class="cyber-dock">
    <div class="dock-item" id="dockLucky" title="اقتراح حظ سريع"><i class="fas fa-dice"></i></div>
    <div class="dock-item" id="dockFav" title="عرض المفضلة فقط"><i class="fas fa-heart"></i></div>
@@ -531,8 +626,9 @@ async function load(reset=false){
     showStatus("",false);
     if(state.items[0])$("heroImg").src=back(state.items[0]);
     
-    $("devPingRate").textContent = Math.round(performance.now() - startTime) + "ms";
-    $("devCacheSize").textContent = (JSON.stringify(localStorage).length / 1024).toFixed(2) + " KB";
+    // تصحيح الأي دي ليعمل بسلاسة دون التسبب في أخطاء 콘솔
+    if($("livePingRate")) $("livePingRate").textContent = Math.round(performance.now() - startTime) + "ms";
+    if($("devCacheSize")) $("devCacheSize").textContent = (JSON.stringify(localStorage).length / 1024).toFixed(2) + " KB";
   }catch(e){showStatus(e.message)}
 }
 
