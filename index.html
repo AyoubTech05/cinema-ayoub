@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>سينما أيوب - المنصة الإمبراطورية الفائقة PWA + AI V2</title>
+<title>سينيما ايوب - الواجهة السينمائية الهادئة والأكثر جاذبية</title>
 
-<meta name="theme-color" content="#e11d48">
+<meta name="theme-color" content="#E50914">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Cinema Ayoub">
+<meta name="apple-mobile-web-app-title" content="سينيما ايوب">
 <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2503/2503508.png">
 
 <link rel="manifest" id="pwaManifest">
@@ -20,494 +20,256 @@
 
 <style>
 :root {
-  --bg-main: #050811;
-  --bg-card: #0b111e;
-  --bg-header: #060a14f0;
-  --border-color: #1e293b;
-  --primary: #e11d48;
-  --primary-glow: rgba(225, 29, 72, 0.45);
+  --bg-main: #0b0f19; /* أزرق ليلي عميق وهادئ بدلاً من السواد القاتم */
+  --bg-card: #151b2c;
+  --bg-header: rgba(11, 15, 25, 0.85);
+  --border-color: rgba(255, 255, 255, 0.06);
+  --primary: #E50914; /* لون نتفليكس الشهير */
+  --primary-glow: rgba(229, 9, 20, 0.4);
   --text-main: #ffffff;
   --text-muted: #94a3b8;
   --success: #10b981;
 }
 
-.amoled-theme { --bg-main: #000000; --bg-card: #080808; --bg-header: #000000f5; --border-color: #1c1c1c; }
-.neon-theme { --primary: #00f2fe; --primary-glow: rgba(0, 242, 254, 0.4); --border-color: #0f172a; }
-.gold-theme { --primary: #fbbf24; --primary-glow: rgba(251, 191, 36, 0.4); --border-color: #2d2204; }
-
 * { box-sizing: border-box; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
-body { margin: 0; font-family: 'Tajawal', sans-serif; background: var(--bg-main); color: var(--text-main); overflow-x: hidden; padding-bottom: 60px; }
+body { margin: 0; font-family: 'Tajawal', sans-serif; background: var(--bg-main); color: var(--text-main); overflow-x: hidden; padding-bottom: 90px; -webkit-tap-highlight-color: transparent; }
 
-.breaking-ticker {
-  background: linear-gradient(90deg, #be123c, var(--primary));
-  color: white; padding: 8px 20px; font-weight: 800; font-size: 13px;
-  overflow: hidden; white-space: nowrap; box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+/* تأثير إضاءة خلفية هادئ للموقع لمنع الجمود البصري */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at 10% 20%, rgba(229, 9, 20, 0.04) 0%, transparent 50%),
+              radial-gradient(circle at 90% 80%, rgba(24, 119, 242, 0.03) 0%, transparent 50%);
+  z-index: -1;
+  pointer-events: none;
 }
-.ticker-content { display: inline-block; animation: marquee 25s linear infinite; }
-@keyframes marquee { 0% { transform: translate3d(100%, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
 
-header { position: sticky; top: 0; z-index: 100; display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap; padding: 14px 4%; background: var(--bg-header); border-bottom: 1px solid var(--border-color); backdrop-filter: blur(16px); }
-.logo { font-size: 26px; font-weight: 900; color: var(--primary); text-shadow: 0 0 12px var(--primary-glow); text-decoration: none; display: flex; flex-direction: column; }
-.logo span { font-size: 11px; color: var(--text-muted); font-weight: 600; letter-spacing: 0.5px; }
+/* هيدر سينيما ايوب الفاخر */
+header { position: sticky; top: 0; z-index: 100; display: flex; gap: 20px; align-items: center; justify-content: space-between; padding: 16px 5%; background: var(--bg-header); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); }
+.logo { font-size: 28px; font-weight: 900; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 8px; text-shadow: 0 0 12px var(--primary-glow); }
+.logo span { font-size: 11px; color: #fff; background: linear-gradient(135deg, var(--primary), #b80710); padding: 3px 8px; border-radius: 6px; font-weight: 800; text-shadow: none; }
 
-.nav-cluster { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-button, input, select, textarea { font-family: inherit; }
+.nav-cluster { display: flex; gap: 12px; align-items: center; }
+button, input, select { font-family: inherit; }
 button { cursor: pointer; outline: none; }
 
-.tab, .btn, .chip { border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-main); border-radius: 12px; padding: 10px 18px; font-weight: 800; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; }
-.tab:hover, .btn:hover, .chip:hover { border-color: var(--primary); background: var(--border-color); transform: translateY(-2px); }
-.tab.active, .chip.active, .btn.primary { background: var(--primary); border-color: var(--primary); box-shadow: 0 0 18px var(--primary-glow); }
+/* أزرار وعناصر التحكم الأنيقة */
+.tab, .btn { border: 1px solid transparent; background: transparent; color: var(--text-main); padding: 10px 18px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; border-radius: 8px; }
+.tab { color: var(--text-muted); }
+.tab:hover { color: #fff; background: rgba(255,255,255,0.03); }
+.tab.active { color: #fff; font-weight: 900; background: rgba(255,255,255,0.06); border-color: var(--border-color); }
 
-.pwa-install-btn { background: linear-gradient(135deg, var(--success), #059669); border: none; display: none; color: #fff; animation: pulseGlow 2s infinite; }
-@keyframes pulseGlow { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); } 70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); } 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
+.btn.primary { background: linear-gradient(185deg, var(--primary), #b80710); color: #fff; box-shadow: 0 4px 15px rgba(229, 9, 20, 0.35); }
+.btn.primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px var(--primary-glow); }
+.btn.secondary { background: rgba(255, 255, 255, 0.06); color: white; border: 1px solid var(--border-color); }
+.btn.secondary:hover { background: rgba(255, 255, 255, 0.12); transform: translateY(-2px); }
 
-.search { flex: 1; min-width: 260px; max-width: 420px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 0 14px; display: flex; align-items: center; gap: 8px; }
-.search input { width: 100%; height: 44px; background: transparent; border: 0; outline: 0; color: white; font-size: 14px; }
-.mic-btn { background: transparent; border: none; color: var(--text-muted); font-size: 16px; padding: 5px; }
-.mic-btn.recording { color: var(--primary); animation: blinkMic 1s infinite alternate; }
-@keyframes blinkMic { 0% { opacity: 0.4; } 100% { opacity: 1; } }
+/* شريط البحث المطور */
+.search { background: rgba(15, 22, 40, 0.6); border: 1px solid var(--border-color); border-radius: 10px; padding: 0 14px; display: flex; align-items: center; gap: 10px; width: 320px; }
+.search input { width: 100%; height: 42px; background: transparent; border: 0; outline: 0; color: white; font-size: 14px; font-weight: 500; }
+.mic-btn { background: transparent; border: none; color: var(--text-muted); font-size: 15px; cursor: pointer; }
+.mic-btn:hover { color: #fff; }
 
-/* 🌟 ميزة واجهة فريدة 1: مؤشر الأداء والضغط التوربيني الحي */
-.cyber-gauge { display: flex; align-items: center; gap: 10px; background: #020617; border: 1px solid #334155; padding: 6px 14px; border-radius: 30px; font-size: 11px; font-family: monospace; color: #38bdf8; font-weight: bold; }
-.gauge-bar { width: 45px; height: 6px; background: #1e293b; border-radius: 3px; overflow: hidden; position: relative; }
-.gauge-fill { width: 75%; height: 100%; background: linear-gradient(90deg, #38bdf8, var(--primary)); animation: gaugeOscillate 1.5s infinite alternate linear; }
-@keyframes gaugeOscillate { 0% { width: 50%; } 100% { width: 95%; } }
+main { padding: 0; }
 
-main { padding: 30px 4%; }
+/* البانر الرئيسي الأكثر جاذبية وأناقة */
+.hero { position: relative; height: 70vh; min-height: 480px; display: flex; align-items: flex-end; padding: 5% 6%; background-size: cover; background-position: center top; margin-bottom: 25px; border-bottom: 1px solid var(--border-color); }
+.hero::before { content: ""; position: absolute; inset: 0; background: linear-gradient(to right, rgba(11, 15, 25, 0.95) 30%, rgba(11, 15, 25, 0.4) 70%, transparent 100%), linear-gradient(to top, var(--bg-main) 0%, transparent 50%); }
+.hero-content { position: relative; z-index: 2; max-width: 650px; }
+h1 { font-size: clamp(30px, 4.5vw, 50px); line-height: 1.2; margin: 0 0 18px; font-weight: 900; text-shadow: 2px 2px 4px rgba(0,0,0,0.6); }
+.hero p { color: #cbd5e1; line-height: 1.7; font-size: 16px; margin-bottom: 25px; }
 
-/* 🌟 ميزة واجهة فريدة 2: رادار الـ Mood والمزاج السينمائي */
-.mood-radar-container { background: radial-gradient(circle at center, #0f172a 0%, #020617 100%); border: 1px dashed var(--primary); border-radius: 20px; padding: 20px; margin-bottom: 30px; display: grid; grid-template-columns: 1fr 2fr; gap: 20px; align-items: center; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); }
-.radar-display { width: 120px; height: 120px; border-radius: 50%; border: 2px solid var(--primary); position: relative; display: grid; place-items: center; margin: 0 auto; overflow: hidden; background: rgba(225,29,72,0.02); }
-.radar-sweep { position: absolute; inset: 0; background: conic-gradient(from 0deg at 50% 50%, transparent 40%, var(--primary-glow) 95%, var(--primary)); border-radius: 50%; animation: rotateSweep 3s linear infinite; pointer-events: none; }
-@keyframes rotateSweep { 100% { transform: rotate(-360deg); } }
-.radar-core { width: 20px; height: 20px; background: white; border-radius: 50%; box-shadow: 0 0 15px var(--primary); z-index: 2; }
-.mood-buttons { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
-.mood-btn { padding: 12px 18px; border-radius: 30px; background: #0b1329; border: 1px solid #1e293b; color: #fff; font-weight: bold; font-size: 13px; cursor: pointer; }
-.mood-btn.active { background: linear-gradient(135deg, var(--primary), #9f1239); border-color: white; box-shadow: 0 0 15px var(--primary-glow); }
+/* شريط التصنيفات الهادئ والجذاب */
+.mood-container { padding: 20px 5% 0; display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; }
+.mood-container::-webkit-scrollbar { display: none; }
+.mood-btn { padding: 10px 20px; border-radius: 20px; background: rgba(255,255,255,0.04); border: 1px solid var(--border-color); color: #cbd5e1; font-weight: 700; font-size: 13px; white-space: nowrap; cursor: pointer; }
+.mood-btn.active, .mood-btn:hover { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 4px 12px var(--primary-glow); }
 
-.hero { display: grid; grid-template-columns: 1fr 380px; gap: 35px; align-items: center; padding-bottom: 30px; border-bottom: 1px solid var(--border-color); }
-h1 { font-size: clamp(28px, 4.5vw, 44px); line-height: 1.25; margin: 0 0 16px; font-weight: 900; }
-.hero p { color: var(--text-muted); line-height: 1.8; font-size: 16px; }
-.hero-img { height: 280px; border-radius: 20px; overflow: hidden; border: 1px solid var(--border-color); background: var(--bg-card); box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
-.hero-img img { width: 100%; height: 100%; object-fit: cover; }
+/* شبكة العروض الاحترافية الجذابة */
+.section-wrapper { padding: 0 5% 40px; }
+.bar { display: flex; justify-content: space-between; align-items: center; margin: 30px 0 18px; }
+.bar h2 { font-weight: 800; font-size: 22px; margin: 0; color: #f8fafc; position: relative; padding-right: 12px; }
+.bar h2::before { content: ''; position: absolute; right: 0; top: 4px; bottom: 4px; width: 4px; background: var(--primary); border-radius: 2px; }
+.bar span { color: var(--text-muted); font-size: 13px; font-weight: 600; background: rgba(255,255,255,0.04); padding: 4px 12px; border-radius: 20px; border: 1px solid var(--border-color); }
 
-.history-section { margin: 25px 0; display: none; }
-.history-scroll { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; }
-.history-pill { background: var(--bg-card); border: 1px solid var(--border-color); padding: 10px 16px; border-radius: 12px; display: flex; align-items: center; gap: 10px; font-size: 13px; cursor: pointer; white-space: nowrap; }
-
-/* 🌟 ميزة واجهة فريدة 3: لوحة إنجازات وجوائز المستخدم */
-.achievements-box { background: linear-gradient(135deg, #090d16 0%, #111827 100%); border: 1px solid var(--border-color); border-radius: 20px; padding: 18px 25px; margin: 25px 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px; }
-.ach-info { display: flex; align-items: center; gap: 15px; }
-.ach-icon { width: 50px; height: 50px; background: #1e1b4b; border-radius: 14px; border: 1px solid #4338ca; display: grid; place-items: center; font-size: 22px; color: #fbbf24; animation: floatIcon 3s ease-in-out infinite; }
-@keyframes floatIcon { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
-.ach-text h4 { margin: 0 0 4px 0; font-size: 15px; font-weight: 900; }
-.ach-text p { margin: 0; font-size: 12px; color: var(--text-muted); }
-.ach-progress-wrapper { width: min(250px, 100%); }
-.ach-progress-bar { width: 100%; height: 8px; background: #1f2937; border-radius: 4px; overflow: hidden; margin-top: 5px; }
-.ach-progress-fill { width: 40%; height: 100%; background: #fbbf24; border-radius: 4px; box-shadow: 0 0 10px rgba(251,191,36,0.5); }
-
-.filters { display: flex; gap: 10px; overflow-x: auto; margin: 25px 0; padding-bottom: 8px; }
-.chip { white-space: nowrap; cursor: pointer; }
-.bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 20px 0; }
-.bar h2 { font-weight: 800; font-size: 24px; margin: 0; }
-.bar span { color: var(--text-muted); background: var(--bg-card); padding: 6px 14px; border-radius: 10px; border: 1px solid var(--border-color); font-size: 13px; font-weight: 700; }
-
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 22px; }
-.card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; position: relative; cursor: pointer; transform-origin: center; }
-.card:hover { transform: translateY(-8px) scale(1.02); border-color: var(--primary); box-shadow: 0 15px 30px var(--primary-glow); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; }
+.card { background: var(--bg-card); border-radius: 12px; overflow: hidden; position: relative; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.3); border: 1px solid var(--border-color); }
+.card:hover { transform: scale(1.05) translateY(-5px); z-index: 5; box-shadow: 0 12px 24px rgba(0,0,0,0.5); border-color: rgba(255,255,255,0.15); }
 .poster { position: relative; aspect-ratio: 2/3; background: #070b12; }
 .poster img { width: 100%; height: 100%; object-fit: cover; }
-.rating { position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,0.85); color: #fbbf24; border-radius: 8px; padding: 4px 8px; font-weight: 900; font-size: 12px; display: flex; align-items: center; gap: 4px; backdrop-filter: blur(4px); }
-.fav { position: absolute; top: 12px; right: 12px; width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.75); color: #fff; display: grid; place-items: center; font-size: 15px; }
-.fav.saved { color: #f43f5e; background: #fff; }
-.info { padding: 14px; }
-.info h3 { margin: 0 0 6px; font-size: 15px; font-weight: 800; line-height: 1.4; min-height: 42px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.info p { margin: 0; color: var(--text-muted); font-size: 12px; font-weight: 600; }
+.rating { position: absolute; top: 10px; left: 10px; background: rgba(11, 15, 25, 0.9); color: #fbbf24; border-radius: 6px; padding: 4px 8px; font-weight: 800; font-size: 12px; display: flex; align-items: center; gap: 4px; border: 1px solid var(--border-color); }
+.info { padding: 12px; }
+.info h3 { margin: 0; font-size: 14px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #f8fafc; }
 
-.status { display: none; margin: 20px 0; padding: 18px; border: 1px solid var(--border-color); border-radius: 14px; background: rgba(255,255,255,0.01); color: var(--text-muted); font-weight: bold; text-align: center; }
+/* سجل المتابعة الذكي المبسط */
+.history-section { display: none; margin-bottom: 25px; }
+.history-scroll { display: flex; gap: 12px; overflow-x: auto; padding: 5px 0 15px; scrollbar-width: none; }
+.history-scroll::-webkit-scrollbar { display: none; }
+.history-pill { background: rgba(255,255,255,0.04); border: 1px solid var(--border-color); padding: 10px 18px; border-radius: 8px; display: flex; align-items: center; gap: 10px; font-size: 13px; cursor: pointer; white-space: nowrap; font-weight: 700; color: #e2e8f0; }
+.history-pill:hover { background: rgba(255,255,255,0.08); border-color: var(--primary); }
+
+.status { display: none; margin: 20px 0; padding: 16px; border-radius: 8px; background: rgba(255,255,255,0.02); color: var(--text-muted); font-weight: bold; text-align: center; font-size: 14px; border: 1px solid var(--border-color); }
 .status.show { display: block; }
-.more { text-align: center; margin: 40px; }
 
-/* 🌟 ميزة واجهة فريدة 4: الرصيف العائم أو الـ Floating Cyber Dock */
-.cyber-dock { position: fixed; bottom: 20px; right: 20px; background: rgba(11, 17, 30, 0.85); border: 1px solid var(--primary); backdrop-filter: blur(20px); border-radius: 40px; padding: 8px 16px; display: flex; gap: 12px; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 15px var(--primary-glow); z-index: 1000; }
-.dock-item { width: 40px; height: 40px; border-radius: 50%; background: #151f32; border: 1px solid var(--border-color); color: white; display: grid; place-items: center; font-size: 16px; cursor: pointer; }
-.dock-item:hover { background: var(--primary); border-color: white; transform: scale(1.2); }
+/* شريط التحكم السفلي العائم للهواتف المحمولة */
+.cyber-dock { position: fixed; bottom: 20px; left: 20px; right: 20px; background: rgba(21, 27, 44, 0.8); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid var(--border-color); display: flex; justify-content: space-around; align-items: center; padding: 10px; z-index: 1000; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+.dock-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); font-size: 11px; font-weight: 700; cursor: pointer; background: transparent; border: none; padding: 6px 12px; border-radius: 10px; }
+.dock-item i { font-size: 18px; }
+.dock-item:hover, .dock-item.active { color: #fff; }
+.dock-item.active i { color: var(--primary); text-shadow: 0 0 8px var(--primary-glow); }
 
-.modal { position: fixed; inset: 0; display: none; place-items: center; background: rgba(2, 4, 8, 0.97); z-index: 200; padding: 20px; overflow-y: auto; backdrop-filter: blur(12px); }
+/* مودال تفاصيل المسلسلات والمشاهدة المبسط والجذاب */
+.modal { position: fixed; inset: 0; display: none; place-items: center; background: rgba(7, 10, 18, 0.9); z-index: 2000; padding: 20px; overflow-y: auto; backdrop-filter: blur(15px); }
 .modal.open { display: grid; }
-.dialog { width: min(1200px, 100%); background: #070b12; border: 1px solid var(--border-color); border-radius: 28px; overflow: hidden; box-shadow: 0 30px 70px rgba(0,0,0,0.9); }
-.dhero { position: relative; display: grid; grid-template-columns: 240px 1fr; gap: 35px; align-items: end; padding: 40px; background-size: cover; background-position: center; }
-.dhero:before { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, #070b12 10%, rgba(7, 11, 18, 0.85), #070b12fa); }
-.dhero > * { position: relative; z-index: 1; }
-.close { position: absolute; top: 16px; left: 16px; width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.6); color: white; font-size: 24px; display: grid; place-items: center; }
-.close:hover { background: var(--primary); border-color: var(--primary); }
-.dposter { width: 100%; aspect-ratio: 2/3; object-fit: cover; border-radius: 18px; box-shadow: 0 15px 35px rgba(0,0,0,0.6); border: 1px solid var(--border-color); }
-.pill { display: inline-block; margin: 4px; padding: 6px 14px; border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; background: rgba(255,255,255,0.04); font-size: 13px; font-weight: 700; }
-.modal-actions { margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap; }
+.dialog { width: min(900px, 100%); background: #111625; border-radius: 16px; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.6); position: relative; border: 1px solid var(--border-color); }
+.dhero { position: relative; height: 340px; background-size: cover; background-position: center; display: flex; align-items: flex-end; padding: 30px; }
+.dhero:before { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, #111625 15%, transparent 100%); }
+.dhero-content { position: relative; z-index: 2; width: 100%; }
+.close { position: absolute; top: 16px; left: 16px; width: 36px; height: 36px; border-radius: 50%; border: none; background: rgba(0,0,0,0.6); color: white; font-size: 22px; display: grid; place-items: center; z-index: 10; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; }
+.close:hover { background: #fff; color: #000; }
 
-.player-ambient-wrapper { position: relative; padding: 15px; background: #000; transition: box-shadow 0.4s ease; }
-.player { display: none; background: #000; border-radius: 16px; overflow: hidden; border: 1px solid var(--border-color); }
+.modal-body { padding: 30px; }
+.modal-main h2 { margin: 0 0 14px; font-size: 30px; font-weight: 900; }
+.modal-meta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+.pill { display: inline-block; padding: 4px 10px; background: rgba(255,255,255,0.06); border-radius: 6px; font-size: 13px; font-weight: 700; color: #e2e8f0; border: 1px solid var(--border-color); }
+.pill.match { color: var(--success); background: transparent; border: none; padding: 0; font-size: 14px; }
+#overview { color: #cbd5e1; line-height: 1.7; font-size: 15px; margin: 0; }
+
+.modal-actions { margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap; }
+.ep-select { background: rgba(255,255,255,0.02); padding: 16px 20px; display: flex; gap: 16px; border-radius: 8px; margin: 20px 30px 0; flex-wrap: wrap; align-items: center; border: 1px solid var(--border-color); }
+.ep-select label { font-weight: 700; font-size: 13px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+.ep-select select { background: #0b0f19; color: #fff; border: 1px solid var(--border-color); padding: 8px 14px; border-radius: 6px; font-weight: 700; outline: none; cursor: pointer; }
+
+/* صندوق المشغل والسيرفرات الكلاسيكي */
+.player-ambient-wrapper { padding: 0 30px 30px; }
+.player { display: none; background: #000; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color); }
 .player.show { display: block; }
 iframe { width: 100%; aspect-ratio: 16/9; border: 0; background: #000; display: block; }
-.video-js { width: 100%; aspect-ratio: 16/9; display: block; }
-.servers { display: flex; gap: 8px; flex-wrap: wrap; padding: 14px; background: var(--bg-card); border-top: 1px solid var(--border-color); }
-.server { border: 1px solid var(--border-color); background: #151f32; color: #fff; border-radius: 10px; padding: 10px 16px; font-weight: 800; font-size: 13px; }
+.servers { display: flex; gap: 10px; flex-wrap: wrap; padding: 14px; background: rgba(255,255,255,0.02); border-top: 1px solid var(--border-color); }
+.server { border: none; background: rgba(255,255,255,0.06); color: #fff; border-radius: 6px; padding: 10px 16px; font-weight: 700; font-size: 13px; cursor: pointer; }
+.server.active { background: var(--primary); box-shadow: 0 0 10px var(--primary-glow); }
 
-.ep-select { background: var(--bg-card); padding: 15px 40px; display: flex; gap: 20px; border-top: 1px solid var(--border-color); flex-wrap: wrap; align-items: center; }
-.ep-select label { font-weight: 800; font-size: 14px; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
-.ep-select select { background: #151f32; color: #fff; border: 1px solid var(--border-color); padding: 8px 14px; border-radius: 10px; font-weight: 700; outline: none; }
+/* الاستجابة والتوافقية */
+@media (min-width: 769px) {
+  .cyber-dock { display: none; }
+  #desktopInstallBtn { display: inline-flex; }
+}
 
-.infinite-features-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; padding: 25px; background: #04060c; border-top: 2px solid var(--primary); }
-.feature-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 16px; }
-.feature-card h4 { margin: 0 0 10px 0; font-size: 14px; color: var(--primary); display: flex; align-items: center; gap: 8px; font-weight: 900; }
-.feature-card select, .feature-card textarea, .feature-card input { width: 100%; background: #151f32; border: 1px solid var(--border-color); color: #fff; padding: 10px; border-radius: 8px; outline: none; margin-top: 8px; font-size: 13px; font-weight: 600; }
-.ai-box { background: #020306; border: 1px dashed var(--border-color); padding: 10px; border-radius: 8px; font-size: 12px; line-height: 1.5; color: #34d399; margin-top: 8px; }
-.comment-box { max-height: 120px; overflow-y: auto; font-size: 12px; color: var(--text-muted); padding: 6px; background: #020306; border-radius: 8px; }
-.comment-msg { padding: 6px 0; border-bottom: 1px solid #151f32; }
-
-.popcorn-particle { position: fixed; pointer-events: none; z-index: 9999; animation: flyUp 1.3s cubic-bezier(0.1, 0.8, 0.3, 1) forwards; font-size: 26px; }
-@keyframes flyUp { 0% { transform: translateY(100vh) scale(0.5) rotate(0deg); opacity: 1; } 100% { transform: translateY(-10vh) scale(1.2) rotate(720deg); opacity: 0; } }
-
-/* 📱 تعديلات التجاوب للشاشات الصغيرة والموبايل (PWA Responsive) */
 @media (max-width: 768px) {
-  body {
-    padding-bottom: 90px; /* ترك مساحة كافية للـ Cyber Dock */
-  }
-  header {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-    padding: 12px 4%;
-  }
-  .nav-cluster {
-    justify-content: center;
-    width: 100%;
-  }
-  .search {
-    max-width: 100%;
-    min-width: 100%;
-  }
-  .cyber-gauge {
-    justify-content: center;
-    order: -1; /* يظهر أول عنصر في الأعلى لحفظ تناسق المساحة */
-    width: 100%;
-  }
-  .mood-radar-container {
-    grid-template-columns: 1fr;
-    text-align: center;
-    gap: 15px;
-  }
-  .radar-display {
-    width: 100px;
-    height: 100px;
-  }
-  .hero {
-    grid-template-columns: 1fr;
-    text-align: center;
-    gap: 20px;
-  }
-  .hero-img {
-    height: 200px;
-    order: -1; /* رفع الصورة فوق العنوان لتناسب الموبايل */
-  }
-  .achievements-box {
-    flex-direction: column;
-    text-align: center;
-    gap: 15px;
-    padding: 15px;
-  }
-  .ach-info {
-    flex-direction: column;
-  }
-  .ach-progress-wrapper {
-    width: 100%;
-  }
-  .dhero {
-    grid-template-columns: 1fr;
-    padding: 20px;
-    text-align: center;
-    align-items: center;
-  }
-  .dposter {
-    width: 160px;
-    margin: 0 auto;
-  }
-  .modal-actions {
-    justify-content: center;
-    flex-direction: column;
-    width: 100%;
-  }
-  .modal-actions .btn {
-    width: 100%;
-    justify-content: center;
-  }
-  .ep-select {
-    padding: 15px 20px;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-  }
-  .ep-select select {
-    width: 100%;
-  }
-  .infinite-features-grid {
-    grid-template-columns: 1fr;
-    padding: 15px;
-  }
-  .cyber-dock {
-    bottom: 15px;
-    right: 50%;
-    transform: translateX(50%); /* ارجاع شريط التحكم في وسط الشاشة تماماً كالتطبيقات الذكية */
-    width: calc(100% - 40px);
-    max-width: 340px;
-    justify-content: space-around;
-    border-radius: 25px;
-    padding: 6px;
-  }
+  body { padding-bottom: 110px; }
+  header { padding: 12px 4%; }
+  .logo { font-size: 24px; }
+  .search { width: 100%; max-width: 100%; order: 3; margin-top: 10px; }
+  #desktopInstallBtn { display: none !important; }
+  .hero { height: 50vh; padding: 6% 5%; }
+  .grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px; }
+  .modal-body { padding: 20px; }
+  .dhero { height: 200px; padding: 20px; }
+  .modal-main h2 { font-size: 24px; }
+  .ep-select { margin: 15px; padding: 12px; gap: 10px; }
+  .player-ambient-wrapper { padding: 0 15px 15px; }
+  .modal-actions .btn { width: 100%; justify-content: center; }
 }
 </style>
 </head>
-<body id="mainBody">
-
-<div class="breaking-ticker">
-  <div class="ticker-content">🚀 تحديث الجيل الثاني للذكاء الاصطناعي: تم دمج رادار الـ Mood الفوري، نظام لوحة الإنجازات الحية، ومؤشرات الـ Cyber-UI المتكاملة لتجربة فريدة!</div>
-</div>
+<body>
 
 <header>
-  <a href="#" class="logo" onclick="window.location.reload();">سينما أيوب <span id="aiHeaderGreeting">تحميل ذكي مدعوم بالـ AI ⚡</span></a>
+  <div class="nav-cluster">
+    <a href="#" class="logo" onclick="window.location.reload();">سينيما ايوب<span>PRO</span></a>
+    <button class="tab active" data-type="movie">أفلام</button>
+    <button class="tab" data-type="tv">مسلسلات</button>
+  </div>
   
-  <div class="cyber-gauge" title="سرعة تدفق النواة السينمائية الحية">
-     <span>CORE SPEED</span>
-     <div class="gauge-bar"><div class="gauge-fill"></div></div>
-     <span id="livePingRate">0ms</span>
+  <div class="search">
+    <i class="fas fa-search" style="color:var(--text-muted)"></i>
+    <input id="search" placeholder="ابحث عن الأفلام والمسلسلات...">
+    <button class="mic-btn" id="micSearchBtn"><i class="fas fa-microphone"></i></button>
   </div>
 
   <div class="nav-cluster">
-    <button class="tab active" data-type="movie"><i class="fas fa-film"></i> أفلام</button>
-    <button class="tab" data-type="tv"><i class="fas fa-tv"></i> مسلسلات</button>
-  </div>
-  
-  <div class="search" id="searchContainer">
-    <i class="fas fa-search" style="color:var(--text-muted)"></i>
-    <input id="search" placeholder="ابحث بصوتك أو اكتب اسم العرض...">
-    <button class="mic-btn" id="micSearchBtn" title="البحث الصوتي الذكي"><i class="fas fa-microphone"></i></button>
-  </div>
-  
-  <div class="nav-cluster">
-    <button class="btn pwa-install-btn" id="pwaInstallBtn"><i class="fas fa-download"></i> تثبيت التطبيق 📱</button>
-    <button class="tab" id="favOnly"><i class="fas fa-heart"></i> المفضلة</button>
-    <select id="uiThemeSelector" style="background:#111827; color:#fff; border:1px solid #273246; padding:10px; border-radius:12px; font-weight:800; cursor:pointer;">
-       <option value="default">🌌 الثيم الداكن الافتراضي</option>
-       <option value="amoled">🖤 ثيم AMOLED الأسود المطلق</option>
-       <option value="neon">🌐 ثيم النيون السيبراني المتوهج</option>
-       <option value="gold">⭐ الثيم الملكي الذهبي الفاخر</option>
-    </select>
+    <button class="tab" id="favOnly"><i class="fas fa-heart"></i> القائمة</button>
+    <button class="btn primary" id="desktopInstallBtn" style="display:none;"><i class="fas fa-download"></i> تثبيت التطبيق</button>
   </div>
 </header>
 
 <main>
-<section class="mood-radar-container">
-   <div class="radar-display">
-      <div class="radar-sweep"></div>
-      <div class="radar-core"></div>
-   </div>
-   <div>
-      <h3 style="margin:0 0 10px 0; font-weight:900;"><i class="fas fa-bullseye" style="color:var(--primary)"></i> ما هو مزاجك السينمائي الحالي؟</h3>
-      <div class="mood-buttons">
-         <button class="mood-btn active" data-genre="popular">🏠 الكل</button>
-         <button class="mood-btn" data-genre="28">🔥 أكشن وطاقة قصوى</button>
-         <button class="mood-btn" data-genre="35">😂 ضحك وتسلية</button>
-         <button class="mood-btn" data-genre="27">👻 رعب وأجواء مظلمة</button>
-         <button class="mood-btn" data-genre="10749">❤️ رومانسية وهدوء</button>
-         <button class="mood-btn" data-genre="878">🛸 خيال علمي وفيوتشر</button>
-      </div>
-   </div>
-</section>
-
-<section class="hero">
-  <div>
-    <h1>تحكم سينمائي مطلق بالذكاء الاصطناعي والـ PWA</h1>
-    <p>موقع سينما أيوب المطور كلياً ليصبح رائد أنظمة العرض التكيفية. جرب الميزات الجيل الجديد للتحكم عبر ملامح الوجه وتحليل لقطات السيناريو المعقدة فورياً وبدون إعلانات مزعجة.</p>
-    <button class="btn primary" id="topBtn"><i class="fas fa-fire"></i> الأعلى تقييمًا</button>
-    <button class="btn" id="newBtn"><i class="fas fa-star"></i> الأحدث عالمياً</button>
+<section class="hero" id="heroBanner">
+  <div class="hero-content">
+    <h1 id="heroTitle">عالم من الترفيه المطلق</h1>
+    <p id="heroDesc">مرحباً بك في سينيما ايوب بحلتها الجديدة الهادئة. تصفح وشاهد عروضك المفضلة بجودة عالية وبدون انقطاع وبواجهة مريحة وسريعة.</p>
+    <div class="hero-actions">
+       <button class="btn primary" id="heroPlayBtn"><i class="fas fa-play"></i> تشغيل العرض البارز</button>
+       <button class="btn secondary" id="heroNewBtn"><i class="fas fa-fire"></i> الأحدث حالياً</button>
+    </div>
   </div>
-  <div class="hero-img"><img id="heroImg" src="https://image.tmdb.org/t/p/w1280/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg" alt="Banner"></div>
 </section>
 
-<section class="achievements-box">
-   <div class="ach-info">
-      <div class="ach-icon"><i class="fas fa-trophy"></i></div>
-      <div class="ach-text">
-         <h4 id="achTitle">الإمبراطور المبتدئ 🌟</h4>
-         <p id="achDesc">قم بحفظ أولى أفلامك في المفضلة وشغل السيرفرات لرفع مستواك الحصري.</p>
-      </div>
-   </div>
-   <div class="ach-progress-wrapper">
-      <div style="display:flex; justify-content:space-between; font-size:11px; font-weight:bold;">
-         <span>مستوى التقدم</span>
-         <span id="achPercent">40%</span>
-      </div>
-      <div class="ach-progress-bar"><div class="ach-progress-fill" id="achFill" style="width: 40%"></div></div>
-   </div>
-</section>
-
-<div class="history-section" id="historySection">
-   <div class="bar"><h2>⏱️ تابع المشاهدة والتنزيل فوراً</h2></div>
-   <div class="history-scroll" id="historyContainer"></div>
+<div class="mood-container" id="moodContainer">
+   <button class="mood-btn active" data-genre="popular">🏠 الكل</button>
+   <button class="mood-btn" data-genre="28">🔥 أكشن وحركة</button>
+   <button class="mood-btn" data-genre="35">😂 كوميديا وضاحك</button>
+   <button class="mood-btn" data-genre="27">👻 رعب وتشويق</button>
+   <button class="mood-btn" data-genre="878">🚀 خيال علمي</button>
 </div>
 
-<div class="filters" id="filters" style="display:none;"></div>
-<div class="bar"><h2 id="title">الأفلام المتوفرة</h2><span id="count">جاري التحقق الرقمي المباشر...</span></div>
-<div class="status" id="status"></div>
-<section class="grid" id="grid"></section>
-<div class="more"><button class="btn primary" id="more"><i class="fas fa-arrow-down"></i> تحميل المزيد من الحصريات</button></div>
+<div class="section-wrapper">
+  <div class="history-section" id="historySection">
+     <div class="bar"><h2>⏱️ تابع المشاهدة والتنزيل</h2></div>
+     <div class="history-scroll" id="historyContainer"></div>
+  </div>
+
+  <div class="bar">
+    <h2 id="title">الأفلام المتوفرة</h2>
+    <span id="count">جاري التحميل...</span>
+  </div>
+  
+  <div class="status" id="status"></div>
+  <section class="grid" id="grid"></section>
+  <div class="more" style="text-align: center; margin-top: 40px;">
+     <button class="btn primary" id="more"><i class="fas fa-sync-alt"></i> تحميل المزيد من العروض</button>
+  </div>
+</div>
 </main>
 
 <div class="cyber-dock">
-   <div class="dock-item" id="dockLucky" title="اقتراح حظ سريع"><i class="fas fa-dice"></i></div>
-   <div class="dock-item" id="dockFav" title="عرض المفضلة فقط"><i class="fas fa-heart"></i></div>
-   <div class="dock-item" id="dockTop" title="الرجوع للأعلى"><i class="fas fa-arrow-up"></i></div>
+   <button class="dock-item active" id="dockHome"><i class="fas fa-home"></i>الرئيسية</button>
+   <button class="dock-item" id="dockLucky"><i class="fas fa-random"></i>اقتراح عشوائي</button>
+   <button class="dock-item" id="dockFav"><i class="fas fa-heart"></i>المفضلة</button>
+   <button class="dock-item" id="mobileInstallBtn" style="display:none; color: var(--primary);"><i class="fas fa-download"></i>تثبيت</button>
 </div>
 
 <div class="modal" id="modal">
   <div class="dialog">
+    <button class="close" id="close">×</button>
     <section class="dhero" id="dhero">
-      <button class="close" id="close">×</button>
-      <img class="dposter" id="dposter" alt="poster">
-      <div>
+      <div class="dhero-content">
         <h2 id="mtitle"></h2>
-        <div id="meta"></div>
-        <p id="overview"></p>
-        
-        <div class="modal-actions">
-          <button class="btn primary" id="playBtn" style="font-size:16px;"><i class="fas fa-play-circle"></i> تشغيل فوري فائق الاستقرار</button>
-          <button class="btn" id="ayoubDownloadBtn" style="background:#10b981; border-color:#10b981; color:#fff; font-weight:900;"><i class="fas fa-cloud-download-alt"></i> تنزيل مباشر (سرعة توربو)</button>
-          <button class="btn" id="saveBtn">إضافة للمفضلة</button>
-        </div>
       </div>
     </section>
 
     <div class="ep-select" id="epSelectBox" style="display:none;">
        <label><i class="fas fa-layer-group"></i> الموسم: <select id="seasonNum"></select></label>
-       <label><i class="fas fa-list-ol"></i> الحلقة: <select id="episodeNum"></select></label>
+       <label><i class="fas fa-tv"></i> الحلقة: <select id="episodeNum"></select></label>
     </div>
 
-    <div class="player-ambient-wrapper" id="playerAmbientContainer">
+    <div class="modal-body">
+       <div class="modal-main">
+          <div class="modal-meta" id="meta"></div>
+          <p id="overview"></p>
+          <div class="modal-actions">
+            <button class="btn primary" id="playBtn" style="font-size:15px; padding:12px 24px;"><i class="fas fa-play"></i> تشغيل الآن</button>
+            <button class="btn" id="ayoubDownloadBtn" style="background:var(--success); border:none; color:#fff; font-weight:700;"><i class="fas fa-download"></i> تنزيل مباشر سريع</button>
+            <button class="btn secondary" id="saveBtn">حفظ في قائمتي</button>
+          </div>
+       </div>
+    </div>
+
+    <div class="player-ambient-wrapper">
         <div class="player" id="playerBox">
           <iframe id="iframePlayer" allowfullscreen></iframe>
-          <video id="videoPlayer" class="video-js vjs-big-play-centered" controls preload="auto" style="display:none"></video>
           <div class="servers" id="servers"></div>
-          
-          <div class="infinite-features-grid">
-             <div class="feature-card">
-                <h4><i class="fas fa-eye"></i> محلل ومفسر اللقطات الفوري (AI Scene Decoder)</h4>
-                <button class="btn" id="aiScanSceneBtn" style="width:100%; font-size:12px;"><i class="fas fa-microscope"></i> مسح وتحليل المشهد الحالي</button>
-                <div class="ai-box" id="aiSceneResult">اضغط أعلاه ليقوم الذكاء الاصطناعي بقراءة شيفرة المشهد وتفسير الحوارات العميقة فورياً...</div>
-             </div>
-
-             <div class="feature-card">
-                <h4><i class="fas fa-language"></i> الترجمة العصبونية للعامية (AI Neuro-Sub)</h4>
-                <select id="aiNeuroSubSelect">
-                   <option value="none" selected>الترجمة الفصحى المستقرة الافتراضية</option>
-                   <option value="dz-east">🇩🇿 دبلجة وعامية جزائرية (لهجة الشرق)</option>
-                   <option value="dz-center">🇩🇿 عامية جزائرية مبسطة (العاصمة)</option>
-                   <option value="easy">💡 تبسيط الحوارات الطبية/القانونية المعقدة</option>
-                </select>
-                <div class="ai-box" id="aiSubStatus">نظام الترجمة العصبية جاهز للحقن الديناميكي.</div>
-             </div>
-
-             <div class="feature-card">
-                <h4><i class="fas fa-search-plus"></i> رادار كشف تفاصيل الإخراج (AI Easter-Eggs)</h4>
-                <button class="btn" id="aiHunterBtn" style="width:100%; font-size:12px; background:#6366f1; border:none; color:white;"><i class="fas fa-mask"></i> استخراج التلميحات والأخطاء الإخراجية</button>
-                <div class="ai-box" id="aiHunterResult" style="color:#a5b4fc;">الرادار مستعد لمسح خلفيات المشهد والتعرف على الروابط المخفية.</div>
-             </div>
-
-             <div class="feature-card">
-                <h4><i class="fas fa-smile"></i> التحكم التعبيري الافتراضي (AI Face Control)</h4>
-                <select id="aiFaceControlSelect">
-                   <option value="off" selected>❌ إيقاف مستشعر الإيماءات</option>
-                   <option value="on">🟢 تشغيل المحاكاة (الابتسام يشغل/الغمز يقدم)</option>
-                </select>
-                <small style="color:var(--text-muted); font-size:11px; margin-top:5px; display:block;" id="aiFaceFeedback">المستشعر غير نشط حالياً.</small>
-             </div>
-
-             <div class="feature-card">
-                <h4><i class="fas fa-volume-up"></i> مضخم وموازن الصوت التوربيني</h4>
-                <select id="audioBoostRange">
-                   <option value="1" selected>🔊 الوضع الطبيعي الافتراضي (100%)</option>
-                   <option value="1.5">🔊 مضخم صوت متوسط (150%)</option>
-                   <option value="2.5">🔥 مضخم خارق للهواتف (250%)</option>
-                   <option value="3.5">⚡ قدرة إمبراطورية قصوى (350%)</option>
-                </select>
-             </div>
-
-             <div class="feature-card">
-                <h4><i class="fas fa-brain"></i> عازل ومضخم الحوار الذكي (AI Voice Focus)</h4>
-                <select id="aiVoiceFocus">
-                   <option value="off" selected>❌ إيقاف تفعيل الفلتر الذكي</option>
-                   <option value="boost">🗣️ تركيز وتضخيم صوت الكلام (Dialogue)</option>
-                   <option value="isolate">🎬 تعزيز المؤثرات السينمائية والمحيطية</option>
-                </select>
-             </div>
-
-             <div class="feature-card">
-                <h4><i class="fas fa-user-shield"></i> درع حماية AI من الحرق (Anti-Spoiler)</h4>
-                <select id="aiSpoilerShield">
-                   <option value="off" selected>❌ إيقاف تشغيل الدرع</option>
-                   <option value="on">🛡️ تفعيل الدرع الذكي لحجب الحرق</option>
-                </select>
-             </div>
-
-             <div class="feature-card">
-                <h4><i class="fas fa-network-wired"></i> الملاح الآلي للشبكة (AI Quality Pilot)</h4>
-                <div style="font-size:11px; color:#34d399; background:#020408; padding:8px; border-radius:6px; font-family:monospace; line-height:1.5; margin-bottom:5px;">
-                   تحسين التدفق: <span style="color:#fff" id="aiNetStatus">مستقر (خالٍ من التشنج) 🤖</span>
-                </div>
-                <select id="aiNetConfig">
-                   <option value="auto" selected>🤖 موازنة ذكية تلقائية</option>
-                   <option value="turbo">⚡ سحب أقصى طاقة للسيرفر</option>
-                   <option value="data-saver">📉 الحفاظ على رصيد الباقة</option>
-                </select>
-             </div>
-
-             <div class="feature-card">
-                <h4><i class="fas fa-code"></i> لوحة تحكم المطور وجلب المحرك الحية</h4>
-                <div style="font-size:11px; color:#34d399; background:#020408; padding:8px; border-radius:6px; font-family:monospace;">
-                   <div>حالة النظام: <span style="color:#fff">ONLINE (PWA App)</span></div>
-                   <div>مساحة الكاش: <span id="devCacheSize">Calculating...</span></div>
-                </div>
-                <input id="devJsInjector" placeholder="اكتب كود JS هنا واضغط Enter لحقنه فورا...">
-             </div>
-
-             <div class="feature-card">
-                <h4><i class="fas fa-sliders-h"></i> فلاتر معالجة الألوان والوضع المسرحي</h4>
-                <select id="videoFilterControl">
-                   <option value="none" selected>الوضع الطبيعي الافتراضي</option>
-                   <option value="contrast(1.25) brightness(1.05)">وضع الألوان الفائقة الجاذبية (Vivid)</option>
-                   <option value="brightness(1.15) contrast(1.1)">وضع السهرة السينمائي المريح</option>
-                </select>
-             </div>
-
-             <div class="feature-card">
-                <h4><i class="fas fa-lightbulb"></i> التوهج السينمائي المحيطي</h4>
-                <select id="glowControl">
-                   <option value="glow-high" selected>توهج تفاعلي قوي ممتد</option>
-                   <option value="glow-soft">إضاءة ناعمة خفيفة للخلفية</option>
-                   <option value="none">إطفاء الإضاءة بالكامل</option>
-                </select>
-                <button class="btn" id="popcornLauncher" style="width:100%; margin-top:8px; padding:5px; font-size:12px; background:#fbbf24; border:none; color:#000;">🍿 إطلاق مؤثرات الفشار الاحتفالية</button>
-             </div>
-
-             <div class="feature-card">
-                <h4><i class="fas fa-history"></i> انطباعات المجتمع الفورية الحية</h4>
-                <div class="comment-box" id="liveCommunityChat">
-                   <div class="comment-msg"><b>ياسين الباتني:</b> التحديث الجديد والتثبيت على شاشة الهاتف روعة! 👍</div>
-                   <div class="comment-msg"><b>أيوب (المدير):</b> مشاهدة طيبة يا خاوتي، زر التحميل آمن وسريع جداً. 🔥</div>
-                   <div class="comment-msg"><b>سامي الباتني:</b> نهاية الفيلم كانت أسطورية ومات البطل في آخر دقيقة! 😱</div>
-                </div>
-             </div>
-
-          </div>
         </div>
     </div>
   </div>
@@ -521,16 +283,16 @@ const BACK="https://image.tmdb.org/t/p/w1280";
 const FALL="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80";
 
 function getAutoServers(type, id, season = 1, episode = 1) {
-  const queryConfig = "?sub_lang=ar&sub_translate=1&primaryColor=e11d48";
+  const queryConfig = "?sub_lang=ar&sub_translate=1&primaryColor=E50914";
   if (type === "movie") {
     return [
-      { name: "🚀 خادم البث والترجمة الرئيسي (VidSrc Premium)", type: "iframe", url: `https://vidsrc.me/embed/movie/${id}${queryConfig}`, dl: `https://vidsrc.me/embed/movie/${id}` },
-      { name: "⚡ سيرفر السرعة الفائقة والتحميل (VidLink Pro)", type: "iframe", url: `https://vidlink.org/embed/movie/${id}?primaryColor=e11d48`, dl: `https://vidlink.org/embed/movie/${id}` }
+      { name: "🎬 سيرفر البث الرئيسي عالي الدقة", url: `https://vidsrc.me/embed/movie/${id}${queryConfig}`, dl: `https://vidsrc.me/embed/movie/${id}` },
+      { name: "⚡ سيرفر البث الاحتياطي السريع", url: `https://vidlink.org/embed/movie/${id}?primaryColor=E50914`, dl: `https://vidlink.org/embed/movie/${id}` }
     ];
   } else {
     return [
-      { name: "🚀 خادم البث والترجمة الرئيسي (VidSrc Premium)", type: "iframe", url: `https://vidsrc.me/embed/tv/${id}/${season}/${episode}${queryConfig}`, dl: `https://vidsrc.me/embed/tv/${id}/${season}/${episode}` },
-      { name: "⚡ سيرفر الحلقات المباشر (VidLink TV)", type: "iframe", url: `https://vidlink.org/embed/tv/${id}/${season}/${episode}?primaryColor=e11d48`, dl: `https://vidlink.org/embed/tv/${id}/${season}/${episode}` }
+      { name: "🎬 سيرفر الحلقات المباشر الذكي", url: `https://vidsrc.me/embed/tv/${id}/${season}/${episode}${queryConfig}`, dl: `https://vidsrc.me/embed/tv/${id}/${season}/${episode}` },
+      { name: "⚡ سيرفر البث الاحتياطي السريع", url: `https://vidlink.org/embed/tv/${id}/${season}/${episode}?primaryColor=E50914`, dl: `https://vidlink.org/embed/tv/${id}/${season}/${episode}` }
     ];
   }
 }
@@ -540,66 +302,51 @@ const $=id=>document.getElementById(id);
 const favs=new Map(JSON.parse(localStorage.getItem("ayoub-favs")||"[]"));
 let localWatchHistory = JSON.parse(localStorage.getItem("ayoub-history-tracker") || "[]");
 
-function saveFavs(){localStorage.setItem("ayoub-favs",JSON.stringify([...favs.entries()])); updateAchievementsSystem();}
+function saveFavs(){localStorage.setItem("ayoub-favs",JSON.stringify([...favs.entries()]));}
 function key(x){return state.type+"-"+x.id}
 function name(x){return x.title||x.name||"بدون عنوان"}
 function date(x){return x.release_date||x.first_air_date||""}
 function poster(x){return x.poster_path?IMG+x.poster_path:FALL}
 function back(x){return x.backdrop_path?BACK+x.backdrop_path:poster(x)}
 function showStatus(t,on=true){$("status").textContent=t;$("status").classList.toggle("show",on)}
-async function get(url){let r=await fetch(url);if(!r.ok)throw Error("خطأ في جلب السيرفرات الحية");return r.json()}
+async function get(url){let r=await fetch(url);if(!r.ok)throw Error("خطأ في الاتصال بالخادم");return r.json()}
 
 function initPwaManifest() {
   const myManifest = {
-    "short_name": "CinemaAyoub",
-    "name": "سينما أيوب الإمبراطورية",
-    "icons": [
-      { "src": "https://cdn-icons-png.flaticon.com/512/2503/2503508.png", "type": "image/png", "sizes": "512x512" }
-    ],
+    "short_name": "سينيما ايوب",
+    "name": "سينيما ايوب - المنصة الاحترافية",
+    "icons": [{ "src": "https://cdn-icons-png.flaticon.com/512/2503/2503508.png", "type": "image/png", "sizes": "512x512" }],
     "start_url": window.location.href,
-    "background_color": "#050811",
-    "theme_color": "#e11d48",
+    "background_color": "#0b0f19",
+    "theme_color": "#E50914",
     "display": "standalone",
     "orientation": "portrait"
   };
-  const stringManifest = JSON.stringify(myManifest);
-  const blob = new Blob([stringManifest], {type: 'application/json'});
+  const blob = new Blob([JSON.stringify(myManifest)], {type: 'application/json'});
   $("pwaManifest").setAttribute('href', URL.createObjectURL(blob));
 }
 
 let deferredPrompt;
 window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  $("pwaInstallBtn").style.display = "inline-flex";
+  e.preventDefault(); deferredPrompt = e;
+  $("desktopInstallBtn").style.display = "inline-flex";
+  $("mobileInstallBtn").style.display = "flex";
 });
 
-$("pwaInstallBtn").onclick = async () => {
+const triggerInstallLogic = async () => {
   if (deferredPrompt) {
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
     if (outcome === 'accepted') {
-      $("pwaInstallBtn").style.display = "none";
+      $("desktopInstallBtn").style.display = "none";
+      $("mobileInstallBtn").style.display = "none";
       deferredPrompt = null;
     }
-  } else {
-    alert("📱 للتثبيت على الجهاز: اختر 'إضافة إلى الشاشة الرئيسية' من خيارات المتصفح.");
   }
 };
 
-function renderFilters(){
-  $("filters").innerHTML="";
-  const list=state.type==="movie"?
-    [["popular","الكل"],["top_rated","الأعلى تقييمًا"],["upcoming","قادم قريباً"],["28","أكشن"],["35","كوميديا"],["27","رعب"],["ar","عربي"]] :
-    [["popular","الكل"],["airing_today","يعرض اليوم"],["top_rated","الأعلى تقييمًا"],["10759","أكشن"],["35","كوميديا"],["ar","عربي"]];
-  list.forEach(([id,label])=>{
-    let b=document.createElement("button");
-    b.className="chip"+(state.filter===id?" active":"");
-    b.textContent=label;
-    b.onclick=()=>{state.filter=id;state.page=1;state.query="";$("search").value="";renderFilters();load(true)};
-    $("filters").appendChild(b);
-  });
-}
+$("desktopInstallBtn").onclick = triggerInstallLogic;
+$("mobileInstallBtn").onclick = triggerInstallLogic;
 
 function makeUrl(){
   const lang="language=ar-SA&include_adult=false";
@@ -607,33 +354,30 @@ function makeUrl(){
   if(["popular","top_rated"].includes(state.filter))return `${BASE}/${state.type}/${state.filter}?${API}&${lang}&page=${state.page}`;
   if(state.type==="movie"&&["now_playing","upcoming"].includes(state.filter))return `${BASE}/movie/${state.filter}?${API}&${lang}&page=${state.page}`;
   if(state.type==="tv"&&state.filter==="airing_today")return `${BASE}/tv/airing_today?${API}&${lang}&page=${state.page}`;
-  let p=new URLSearchParams({language:"ar-SA",include_adult:"false",page:state.page,sort_by:"popularity.desc"});
-  if(state.filter==="ar")p.set("with_original_language","ar"); else p.set("with_genres",state.filter);
-  return `${BASE}/discover/${state.type}?${API}&${p}`;
+  return `${BASE}/discover/${state.type}?${API}&${lang}&with_genres=${state.filter}&page=${state.page}`;
 }
 
 async function load(reset=false){
   if(reset){state.items=[];state.page=1;$("grid").innerHTML=""}
-  showStatus("جاري الاتصال بقاعدة البيانات السينمائية الإمبراطورية الحية...");
-  let startTime = performance.now();
+  showStatus("جاري تهيئة العروض والاتصال بالخادم...");
   try{
     let data=await get(makeUrl());
     let items=data.results||[];
     if(state.favOnly)items=items.filter(x=>favs.has(key(x)));
     state.items=reset?items:[...state.items,...items];
     render(state.items);
-    $("count").textContent=state.items.length+" مادة جاهزة للبث الفوري";
+    $("count").textContent = state.type === "movie" ? "أفلام حصرية متوفرة" : "مسلسلات جاهزة للبث";
     showStatus("",false);
-    if(state.items[0])$("heroImg").src=back(state.items[0]);
     
-    // تصحيح الأي دي ليعمل بسلاسة دون التسبب في أخطاء 콘솔
-    if($("livePingRate")) $("livePingRate").textContent = Math.round(performance.now() - startTime) + "ms";
-    if($("devCacheSize")) $("devCacheSize").textContent = (JSON.stringify(localStorage).length / 1024).toFixed(2) + " KB";
+    if(state.items[0]) {
+      $("heroBanner").style.backgroundImage = `url(${back(state.items[0])})`;
+      $("heroTitle").textContent = name(state.items[0]);
+      $("heroDesc").textContent = state.items[0].overview || "عرض سينمائي مميز مجهز بحزم عناصر البث المباشر فائق الدقة بدون إعلانات من سينيما ايوب.";
+    }
   }catch(e){showStatus(e.message)}
 }
 
 function render(items){
-  $("grid").innerHTML="";
   items.forEach(x=>{
     let k=key(x);
     let c=document.createElement("article");
@@ -641,15 +385,11 @@ function render(items){
     c.innerHTML=`
       <div class="poster">
         <img src="${poster(x)}" alt="${name(x)}" loading="lazy">
-        <span class="rating">★ ${(x.vote_average||0).toFixed(1)}</span>
-        <button class="fav ${favs.has(k)?"saved":""}">${favs.has(k)?"♥":"♡"}</button>
+        <span class="rating"><i class="fas fa-star"></i> ${(x.vote_average || 7.5).toFixed(1)}</span>
       </div>
-      <div class="info"><h3>${name(x)}</h3><p>${date(x).slice(0,4)||"غير محدد"}</p></div>`;
-    c.querySelector(".fav").onclick=e=>{
-      e.stopPropagation();
-      favs.has(k)?favs.delete(k):favs.set(k,{item:x,type:state.type});
-      saveFavs();render(state.items);
-    };
+      <div class="info">
+         <h3>${name(x)}</h3>
+      </div>`;
     c.onclick=()=>openDetails(x);
     $("grid").appendChild(c);
   });
@@ -660,29 +400,27 @@ async function openDetails(x, savedS=null, savedE=null){
   $("modal").classList.add("open");
   $("playerBox").classList.remove("show");
   $("epSelectBox").style.display = "none";
-  cleanupPlayer();
+  $("iframePlayer").src = "";
   
   $("dhero").style.backgroundImage=`url(${back(x)})`;
-  $("dposter").src=poster(x);
   $("mtitle").textContent=name(x);
-  $("overview").textContent=x.overview||"عمل سينمائي حصري مميز مجهز بحزم الميزات اللامتناهية وعناصر البث الصاروخي المباشر.";
-  $("meta").innerHTML=[state.type==="movie"?"فيلم سينمائي":"مسلسل تلفزيوني", date(x).slice(0,4)||"غير محدد", "★ "+(x.vote_average||0).toFixed(1)].map(t=>`<span class="pill">${t}</span>`).join("");
-  $("saveBtn").textContent=favs.has(key(x))?"إزالة من المفضلة":"إضافة للمفضلة";
+  $("overview").textContent=x.overview||"عمل سينمائي حصري ومميز مجهز بحزم خوادم البث المباشر الاحترافية والآمنة.";
+  $("meta").innerHTML=[
+    `<span class="pill match">${(x.vote_average*10 || 75).toFixed(0)}% متطابق</span>`,
+    `<span class="pill">${date(x).slice(0,4)||"جديد"}</span>`,
+    `<span class="pill">${state.type==="movie"?"فيلم كامل":"مسلسل"}</span>`
+  ].join("");
+  $("saveBtn").innerHTML = favs.has(key(x)) ? `<i class="fas fa-check"></i> في قائمتك` : `<i class="fas fa-plus"></i> حفظ في القائمة`;
 
-  $("aiSceneResult").textContent = "اضغط أعلاه ليقوم الذكاء الاصطناعي بقراءة شيفرة المشهد وتفسير الحوارات العميقة فورياً...";
-  $("aiHunterResult").textContent = "الرادار مستعد لمسح خلفيات المشهد والتعرف على الروابط المخفية.";
-
-  const initialList = getAutoServers(state.type, x.id, 1, 1);
-  state.currentDlUrl = initialList[0].dl;
+  syncDownloadTarget();
 
   if(state.type === "tv") {
      try {
         let details = await get(`${BASE}/tv/${x.id}?${API}&language=ar-SA`);
-        let sSelect = $("seasonNum");
-        sSelect.innerHTML = "";
+        let sSelect = $("seasonNum"); sSelect.innerHTML = "";
         details.seasons.forEach(s => {
            if(s.season_number > 0) {
-              sSelect.innerHTML += `<option value="${s.season_number}">الموسم ${s.season_number} (${s.episode_count} حلقة)</option>`;
+              sSelect.innerHTML += `<option value="${s.season_number}">الموسم ${s.season_number}</option>`;
            }
         });
         $("epSelectBox").style.display = "flex";
@@ -690,10 +428,9 @@ async function openDetails(x, savedS=null, savedE=null){
         const updateEpisodes = async () => {
            let sNum = sSelect.value;
            let sDetails = await get(`${BASE}/tv/${x.id}/season/${sNum}?${API}&language=ar-SA`);
-           let eSelect = $("episodeNum");
-           eSelect.innerHTML = "";
+           let eSelect = $("episodeNum"); eSelect.innerHTML = "";
            sDetails.episodes.forEach(e => {
-              eSelect.innerHTML += `<option value="${e.episode_number}">الحلقة ${e.episode_number} : ${e.name || ''}</option>`;
+              eSelect.innerHTML += `<option value="${e.episode_number}">الحلقة ${e.episode_number}</option>`;
            });
            if(savedE) { eSelect.value = savedE; savedE = null; }
            syncDownloadTarget();
@@ -704,8 +441,6 @@ async function openDetails(x, savedS=null, savedE=null){
         await updateEpisodes();
      } catch(e) { console.log(e); }
   }
-  syncGlowEffect();
-  applySpoilerShield(); 
 }
 
 function syncDownloadTarget() {
@@ -713,141 +448,6 @@ function syncDownloadTarget() {
    const e = state.type === "tv" ? $("episodeNum").value : 1;
    const list = getAutoServers(state.type, state.active.id, s, e);
    state.currentDlUrl = list[0].dl;
-}
-
-let playerInstance = null;
-let audioContext = null;
-let gainNode = null;
-let aiVoiceFilterNode = null; 
-
-function initAudioBooster() {
-  const videoElement = document.querySelector("#videoPlayer video");
-  if (!videoElement) return;
-  if (!audioContext) {
-     audioContext = new (window.AudioContext || window.webkitAudioContext)();
-     const source = audioContext.createMediaElementSource(videoElement);
-     
-     gainNode = audioContext.createGain();
-     aiVoiceFilterNode = audioContext.createBiquadFilter();
-     aiVoiceFilterNode.type = "peaking";
-     aiVoiceFilterNode.frequency.value = 2000; 
-     aiVoiceFilterNode.Q.value = 1.0;
-     aiVoiceFilterNode.gain.value = 0; 
-
-     source.connect(aiVoiceFilterNode);
-     aiVoiceFilterNode.connect(gainNode);
-     gainNode.connect(audioContext.destination);
-  }
-  gainNode.gain.value = parseFloat($("audioBoostRange").value);
-}
-
-$("audioBoostRange").onchange = () => {
-  if (gainNode) gainNode.gain.value = parseFloat($("audioBoostRange").value);
-  else initAudioBooster();
-};
-
-$("aiScanSceneBtn").onclick = () => {
-   $("aiSceneResult").innerHTML = "⏳ <b>جاري تحليل الإطارات الصورية وحزم الـ Metadata الحية...</b>";
-   setTimeout(() => {
-      const insights = [
-         "🤖 تحليل AI: المشهد الحالي يحتوي على إسقاطات فلسفية عميقة. الحوار المترجم يلمح إلى خيانة مستقبلية من البطل المساعد، ركز جيداً في تفاصيل الإضاءة الخافتة خلفه!",
-         "🤖 تحليل AI: النكتة التي أطلقها الممثل في هذه اللقطة هي تلاعب لفظي بالثقافة الشعبية الغربية ولا يمكن ترجمتها حرفياً، المعنى الحقيقي هو السخرية من البيروقراطية.",
-         "🤖 تحليل AI: وتيرة الموسيقى التصويرية ارتفعت لـ 140BPM، هذا يشير ذكياً إلى اقتراب حدوث لقطة مفاجئة (Jumpscare) أو صدمة درامية خلال 30 ثانية القادمة!"
-      ];
-      $("aiSceneResult").innerHTML = insights[Math.floor(Math.random() * insights.length)];
-   }, 1500);
-};
-
-$("aiNeuroSubSelect").onchange = (e) => {
-   const val = e.target.value;
-   const status = $("aiSubStatus");
-   if(val === "dz-east") {
-      status.innerHTML = "✨ <b>نشط:</b> تم حقن قاموس العصبونات باللهجة الشرقية الجزائرية (أقعد، قسّ حوارات، واش بيك، يا خويا...).";
-   } else if (val === "dz-center") {
-      status.innerHTML = "✨ <b>نشط:</b> تم حقن فلتر التبسيط بلهجة العاصمة والمناطق المجاورة فوريّاً.";
-   } else if (val === "easy") {
-      status.innerHTML = "✨ <b>نشط:</b> تم تفعيل مفسر المصطلحات الطبية والعلمية إلى لغة يومية بسيطة.";
-   } else {
-      status.innerHTML = "نظام الترجمة العصبية جاهز للحقن الديناميكي.";
-   }
-   if($("iframePlayer").src) startStreaming(); 
-};
-
-$("aiHunterBtn").onclick = () => {
-   $("aiHunterResult").innerHTML = "⏳ <b>جاري فحص الخلفيات والعناصر المخفية عبر الرادار الذكي...</b>";
-   setTimeout(() => {
-      const secrets = [
-         "🔍 رادار تفاصيل AI: في الزاوية اليسرى للمشهد، ظهر ملصق لفيلم قديم لنفس المخرج تم إنتاجه عام 2014 كنوع من التحية السرية (Easter Egg)!",
-         "🔍 رادار تفاصيل AI: خطأ إخراجي مرصود! الساعة في يد الممثل تغير توقيتها بين لقطتين متتاليتين من 4:15 إلى 4:45 نتيجة إعادة تصوير المشهد.",
-         "🔍 رادار تفاصيل AI: السيارة التي مرت في الخلفية تحمل نفس رقم لوحة السيارة الشهيرة في سلسلة أفلام المخرج السابقة، مما يؤكد ترابط العوالم!"
-      ];
-      $("aiHunterResult").innerHTML = secrets[Math.floor(Math.random() * secrets.length)];
-   }, 1200);
-};
-
-let aiFaceInterval = null;
-$("aiFaceControlSelect").onchange = (e) => {
-   const val = e.target.value;
-   const feedback = $("aiFaceFeedback");
-   clearInterval(aiFaceInterval);
-   
-   if(val === "on") {
-      feedback.innerHTML = "🟢 <b>المستشعر الافتراضي نشط:</b> جاري محاكاة تتبع ملامح الوجه عبر الكاميرا الأمامية...";
-      aiFaceInterval = setInterval(() => {
-         const actions = [
-            "رصد ابتسامة عريضة 😊 -> استمرار تشغيل العرض بنجاح.",
-            "رصد التفات الرأس بعيداً 🗣️ -> خفض الصوت تلقائياً للحفاظ على التركيز.",
-            "رصد غمز بالعين اليمنى 😉 -> تقديم العرض 10 ثوانٍ للأمام ذكياً."
-         ];
-         feedback.innerHTML = "🟢 " + actions[Math.floor(Math.random() * actions.length)];
-      }, 4000);
-   } else {
-      feedback.textContent = "المستشعر غير نشط حالياً.";
-   }
-};
-
-function applySpoilerShield() {
-   const shieldActive = $("aiSpoilerShield").value === "on";
-   const comments = document.querySelectorAll(".comment-msg");
-   comments.forEach(c => {
-      if (shieldActive && (c.textContent.includes("مات") || c.textContent.includes("قتل") || c.textContent.includes("نهاية"))) {
-         c.style.filter = "blur(6px)";
-         c.style.background = "#200b11";
-      } else {
-         c.style.filter = "none";
-         c.style.background = "transparent";
-      }
-   });
-}
-$("aiSpoilerShield").onchange = applySpoilerShield;
-
-function cleanupPlayer() {
-    if (playerInstance) { playerInstance.dispose(); playerInstance = null; }
-    $("iframePlayer").src = "";
-    $("videoPlayer").style.display = "none";
-    $("iframePlayer").style.display = "none";
-    clearInterval(window.liveChatLoop);
-    clearInterval(aiFaceInterval);
-    $("aiFaceControlSelect").value = "off";
-    $("aiFaceFeedback").textContent = "المستشعر غير نشط حالياً.";
-}
-
-function playServer(server,index){
-  document.querySelectorAll(".server").forEach(b=>b.classList.remove("active"));
-  document.querySelectorAll(".server")[index]?.classList.add("active");
-  cleanupPlayer();
-
-  if(server.type==="video"){
-    $("videoPlayer").style.display="block";
-    playerInstance = videojs('videoPlayer', {
-        autoplay: true,
-        sources: [{ src: server.url, type: 'video/mp4' }]
-    });
-    setTimeout(initAudioBooster, 1000);
-  } else {
-    $("iframePlayer").src=server.url;
-    $("iframePlayer").style.display="block";
-  }
 }
 
 function startStreaming() {
@@ -862,137 +462,24 @@ function startStreaming() {
     let b=document.createElement("button");
     b.className="server"+(i===0?" active":"");
     b.textContent=srv.name;
-    b.onclick=()=>{ state.currentDlUrl = srv.dl; playServer(srv,i); };
+    b.onclick=()=>{
+       state.currentDlUrl = srv.dl;
+       document.querySelectorAll(".server").forEach(el=>el.classList.remove("active"));
+       b.classList.add("active");
+       $("iframePlayer").src=srv.url;
+    };
     $("servers").appendChild(b);
   });
-  playServer(list[0],0);
-  triggerPopcornAnimation();
+  $("iframePlayer").src=list[0].url;
   saveToHistory(x, s, e);
-  launchLiveSimulatedChat();
-  updateAchievementsSystem();
 }
-
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-if (SpeechRecognition) {
-   const recognition = new SpeechRecognition();
-   recognition.lang = 'ar-DZ';
-   recognition.onresult = (event) => {
-      const voiceResult = event.results[0][0].transcript;
-      $("search").value = voiceResult; state.query = voiceResult; load(true);
-      $("micSearchBtn").classList.remove("recording");
-   };
-   $("micSearchBtn").onclick = () => { recognition.start(); $("micSearchBtn").classList.add("recording"); };
-} else { $("micSearchBtn").style.display = "none"; }
-
-$("ayoubDownloadBtn").onclick = () => {
-   if(state.currentDlUrl) {
-      const forceAnchor = document.createElement("a");
-      forceAnchor.href = state.currentDlUrl; forceAnchor.setAttribute("target", "_blank");
-      document.body.appendChild(forceAnchor); forceAnchor.click(); document.body.removeChild(forceAnchor);
-   }
-};
-
-function triggerPopcornAnimation() {
-   for (let i = 0; i < 20; i++) {
-      let part = document.createElement("div");
-      part.className = "popcorn-particle";
-      part.textContent = ["🍿", "✨", "🎬", "⭐"][Math.floor(Math.random() * 4)];
-      part.style.left = Math.random() * 100 + "vw"; document.body.appendChild(part);
-      setTimeout(() => part.remove(), 1300);
-   }
-}
-$("popcornLauncher").onclick = triggerPopcornAnimation;
-$("videoFilterControl").onchange = (e) => { $("iframePlayer").style.filter = e.target.value; $("videoPlayer").style.filter = e.target.value; };
-
-function syncGlowEffect() {
-   const val = $("glowControl").value;
-   const wrapper = $("playerAmbientContainer");
-   if(val === "glow-high") wrapper.style.boxShadow = "0 0 50px var(--primary-glow)";
-   else if(val === "glow-soft") wrapper.style.boxShadow = "0 0 20px rgba(255,255,255,0.06)";
-   else wrapper.style.boxShadow = "none";
-}
-$("glowControl").onchange = syncGlowEffect;
-
-function launchLiveSimulatedChat() {
-   const poolNames = ["محمد الجلفاوي", "سامي الباتني", "كريم الوهراني", "نور الهدى"];
-   const poolMsgs = ["سيرفر VidLink صاروخي وجودة روعة!", "تطبيق خفيف جداً أسرع من نتفليكس 🍿", "الترجمة متناسقة ومضخم الصوت شغال 100%."];
-   clearInterval(window.liveChatLoop);
-   window.liveChatLoop = setInterval(() => {
-      let chat = $("liveCommunityChat");
-      let randName = poolNames[Math.floor(Math.random() * poolNames.length)];
-      let randMsg = poolMsgs[Math.floor(Math.random() * poolMsgs.length)];
-      chat.innerHTML += `<div class="comment-msg"><b>${randName}:</b> ${randMsg}</div>`;
-      applySpoilerShield(); chat.scrollTop = chat.scrollHeight;
-   }, 5000);
-}
-
-const triggerLuckyAction = () => {
-   if(state.items.length > 0) {
-      let luckyChoice = state.items[Math.floor(Math.random() * state.items.length)];
-      alert(`🎲 يقترح عليك النظام الفريد مشاهدة: [ ${name(luckyChoice)} ] استمتع بالعرض!`);
-      openDetails(luckyChoice);
-   }
-};
-
-/* 🛠️ ربط أزرار الـ Mood والمزاج السينمائي الفريد */
-document.querySelectorAll(".mood-btn").forEach(btn => {
-   btn.onclick = () => {
-      document.querySelectorAll(".mood-btn").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      const genre = btn.dataset.genre;
-      state.filter = genre;
-      state.page = 1;
-      state.query = "";
-      $("search").value = "";
-      load(true);
-   };
-});
-
-/* 🛠️ ترقية نظام الإنجازات التفاعلي حركياً */
-function updateAchievementsSystem() {
-   const totalFavs = favs.size;
-   const totalHistory = localWatchHistory.length;
-   
-   let title = "الإمبراطور المبتدئ 🌟";
-   let desc = "قم بحفظ أفلامك المفضلة وشغل السيرفرات لرفع مستواك الحصري.";
-   let progress = 20;
-
-   if(totalFavs >= 1 || totalHistory >= 1) {
-      title = "صياد الحصريات السيبراني 🔍";
-      desc = "جميل جداً! بدأت باكتشاف الخوادم الحية وحفظ المواد السينمائية.";
-      progress = 50;
-   }
-   if(totalFavs >= 4 || totalHistory >= 3) {
-      title = "المتابع الفضائي الخارق 🛸";
-      desc = "مستوى مذهل! تمتلك الآن مكتبة سينمائية متكاملة مدعومة بالكامل بالـ AI.";
-      progress = 90;
-   }
-   
-   $("achTitle").textContent = title;
-   $("achDesc").textContent = desc;
-   $("achPercent").textContent = progress + "%";
-   $("achFill").style.width = progress + "%";
-}
-
-/* ربط عناصر الرصيف العائم */
-$("dockLucky").onclick = triggerLuckyAction;
-$("dockFav").onclick = () => { state.favOnly = !state.favOnly; $("dockFav").style.color = state.favOnly ? "#f43f5e" : "white"; load(true); };
-$("dockTop").onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
-
-$("uiThemeSelector").onchange = (e) => {
-   const body = $("mainBody"); body.className = "";
-   if(e.target.value === "amoled") body.className = "amoled-theme";
-   if(e.target.value === "neon") body.className = "neon-theme";
-   if(e.target.value === "gold") body.className = "gold-theme";
-};
 
 function saveToHistory(item, s, e) {
    localWatchHistory = localWatchHistory.filter(h => h.id !== item.id || h.type !== state.type);
    localWatchHistory.unshift({ id: item.id, type: state.type, title: name(item), season: s, episode: e, fullData: item });
-   if(localWatchHistory.length > 6) localWatchHistory.pop();
+   if(localWatchHistory.length > 5) localWatchHistory.pop();
    localStorage.setItem("ayoub-history-tracker", JSON.stringify(localWatchHistory));
    renderWatchHistoryPills();
-   updateAchievementsSystem();
 }
 
 function renderWatchHistoryPills() {
@@ -1001,38 +488,76 @@ function renderWatchHistoryPills() {
    localWatchHistory.forEach(h => {
       let pill = document.createElement("div"); pill.className = "history-pill";
       let labelText = h.type === "tv" ? `موسم ${h.season} - حلقة ${h.episode}` : "فيلم كامل";
-      pill.innerHTML = `<i class="fas fa-history" style="color:var(--primary)"></i> <b>${h.title}</b> <span style="color:var(--text-muted); font-size:11px;">(${labelText})</span>`;
-      pill.onclick = () => { state.type = h.type; renderFilters(); openDetails(h.fullData, h.season, h.episode); };
+      pill.innerHTML = `<i class="fas fa-history" style="color:var(--primary)"></i> <b>${h.title}</b> <span style="color:var(--text-muted); font-size:12px;">(${labelText})</span>`;
+      pill.onclick = () => { state.type = h.type; loadActiveTabStyle(); openDetails(h.fullData, h.season, h.episode); };
       $("historyContainer").appendChild(pill);
    });
 }
 
-function triggerSmartAiGreeting() {
-   const hours = new Date().getHours();
-   let greeting = (hours >= 5 && hours < 12) ? "صباح الخير أيوب! جولة سينمائية صباحية ذكية نشطة؟ ☀️" : (hours >= 12 && hours < 18) ? "مساء الخير! الـ AI يقترح عليك سهرة سريعة فالتطبيق 🍿" : "أهلاً بك في سهرتك الليلية الفاخرة المنسقة ذكياً 🌌";
-   $("aiHeaderGreeting").textContent = greeting;
+function loadActiveTabStyle() {
+   document.querySelectorAll("[data-type]").forEach(b => {
+      b.classList.toggle("active", b.dataset.type === state.type);
+   });
 }
 
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+if (SpeechRecognition) {
+   const recognition = new SpeechRecognition(); recognition.lang = 'ar-DZ';
+   recognition.onresult = (e) => {
+      const voiceResult = e.results[0][0].transcript;
+      $("search").value = voiceResult; state.query = voiceResult; load(true);
+   };
+   $("micSearchBtn").onclick = () => { recognition.start(); };
+} else { $("micSearchBtn").style.display = "none"; }
+
+$("ayoubDownloadBtn").onclick = () => {
+   if(state.currentDlUrl) window.open(state.currentDlUrl, '_blank');
+};
+
+$("saveBtn").onclick = () => {
+   let k = key(state.active);
+   if(favs.has(k)) { favs.delete(k); } else { favs.set(k,{item:state.active,type:state.type}); }
+   saveFavs();
+   $("saveBtn").innerHTML = favs.has(k) ? `<i class="fas fa-check"></i> في قائمتك` : `<i class="fas fa-plus"></i> حفظ في القائمة`;
+};
+
+document.querySelectorAll(".mood-btn").forEach(btn => {
+   btn.onclick = () => {
+      document.querySelectorAll(".mood-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      state.filter = btn.dataset.genre;
+      load(true);
+   };
+});
+
 $("playBtn").onclick = startStreaming;
+$("heroPlayBtn").onclick = () => { if(state.items[0]) openDetails(state.items[0]); };
+$("heroNewBtn").onclick = () => { state.filter = state.type === "movie" ? "now_playing" : "airing_today"; load(true); };
 $("seasonNum").onchange = () => { syncDownloadTarget(); if($("playerBox").classList.contains("show")) startStreaming(); };
 $("episodeNum").onchange = () => { syncDownloadTarget(); if($("playerBox").classList.contains("show")) startStreaming(); };
-$("close").onclick=()=>{ cleanupPlayer(); $("modal").classList.remove("open"); };
+$("close").onclick=()=>{ $("modal").classList.remove("open"); $("iframePlayer").src=""; };
 $("modal").onclick=e=>{if(e.target.id==="modal")$("close").click()};
 $("search").oninput=()=>{clearTimeout(window.t);window.t=setTimeout(()=>{state.query=$("search").value.trim();load(true)},500)};
 $("more").onclick=()=>{state.page++;load(false)};
-$("topBtn").onclick=()=>{state.filter="top_rated";renderFilters();load(true)};
-$("newBtn").onclick=()=>{state.filter=state.type==="movie"?"now_playing":"airing_today";renderFilters();load(true)};
 $("favOnly").onclick=()=>{state.favOnly=!state.favOnly;$("favOnly").classList.toggle("active",state.favOnly);load(true)};
+
+$("dockHome").onclick = () => { state.favOnly = false; $("favOnly").classList.remove("active"); load(true); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+$("dockFav").onclick = () => { state.favOnly = true; $("favOnly").classList.add("active"); load(true); };
+$("dockLucky").onclick = () => {
+   if(state.items.length > 0) {
+      let luckyChoice = state.items[Math.floor(Math.random() * state.items.length)];
+      openDetails(luckyChoice);
+   }
+};
 
 document.querySelectorAll("[data-type]").forEach(b=>{
   b.onclick=()=>{
-    document.querySelectorAll("[data-type]").forEach(x=>x.classList.remove("active")); b.classList.add("active");
     state.type=b.dataset.type; state.filter="popular"; state.page=1; state.query=""; $("search").value="";
-    renderFilters(); load(true);
+    loadActiveTabStyle(); load(true);
   };
 });
 
-initPwaManifest(); renderFilters(); load(true); renderWatchHistoryPills(); triggerSmartAiGreeting(); updateAchievementsSystem();
+initPwaManifest(); load(true); renderWatchHistoryPills();
 </script>
 </body>
 </html>
